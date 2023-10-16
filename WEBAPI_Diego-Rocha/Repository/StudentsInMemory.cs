@@ -23,5 +23,11 @@ namespace WEBAPI_Diego_Rocha.Repository
         {
             students.Add(student);
         }
+
+        public void UpdateStudent(Student student)
+        {
+            int index = students.FindIndex(studentExists => studentExists.Id == student.Id);
+            students[index] = student;
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace WEBAPI_Diego_Rocha.Repository
         Student GetStudent(string enrollmentNumber);
 
         void CreateStudent(Student student);
+
+        void UpdateStudent(Student student);
     }
 }
