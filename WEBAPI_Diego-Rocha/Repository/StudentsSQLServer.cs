@@ -130,7 +130,29 @@ namespace WEBAPI_Diego_Rocha.Repository
 
         public void UpdateStudent(Student student)
         {
-            throw new NotImplementedException();
+            SqlConnection sqlConnection = connection();
+            SqlCommand cmd = null;
+            try
+            {
+                sqlConnection.Open();
+                cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = "dbo.EditStudents";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 500).Value = student.Name;
+                cmd.Parameters.Add("@Age", SqlDbType.Int).Value = student.Age;
+                cmd.Parameters.Add("@EnrollmentNumber", SqlDbType.NVarChar, 20).Value = student.EnrollmentNumber;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error updating a student occurred" + ex.ToString());
+            }
+            finally
+            {
+                cmd.Dispose();
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
         }
     }
 }
