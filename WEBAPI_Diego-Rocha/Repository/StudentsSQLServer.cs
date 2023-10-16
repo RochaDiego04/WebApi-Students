@@ -51,12 +51,81 @@ namespace WEBAPI_Diego_Rocha.Repository
 
         public Student GetStudent(string enrollmentNumber)
         {
-            throw new NotImplementedException();
+            SqlConnection sqlConnection = connection();
+            SqlCommand cmd = null;
+            Student s = null;
+            try
+            {
+                sqlConnection.Open();
+                cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = "dbo.GetStudents";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@EnrollmentNumber", SqlDbType.NVarChar, 20).Value = enrollmentNumber;
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if(reader.Read())
+                {
+                    s = new Student
+                    {
+                        Name = reader["Name"].ToString(),
+                        Age = Convert.ToInt32(reader["Age"].ToString()),
+                        EnrollmentNumber = reader["EnrollmentNumber"].ToString()
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error returning a new student occurred" + ex.ToString());
+            }
+            finally
+            {
+                cmd.Dispose();
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return s;
         }
 
         public IEnumerable<Student> GetStudents()
         {
-            throw new NotImplementedException();
+            SqlConnection sqlConnection = connection();
+            SqlCommand cmd = null;
+            List<Student> students = new List<Student>();
+            Student s = null;
+            try
+            {
+                sqlConnection.Open();
+                cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = "dbo.GetStudents";
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    s = new Student
+                    {
+                        Name = reader["Name"].ToString(),
+                        Age = Convert.ToInt32(reader["Age"].ToString()),
+                        EnrollmentNumber = reader["EnrollmentNumber"].ToString()
+                    };
+                    students.Add(s);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error returning a new student occurred" + ex.ToString());
+            }
+            finally
+            {
+                cmd.Dispose();
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return students;
         }
 
         public void UpdateStudent(Student student)
