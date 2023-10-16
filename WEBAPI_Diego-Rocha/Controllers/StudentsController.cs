@@ -8,11 +8,11 @@ namespace WEBAPI_Diego_Rocha.Controllers
     [ApiController]
     public class StudentsController : Controller
     {
-        private readonly StudentsInMemory repository;
+        private readonly iStudentsInMemory repository;
 
-        public StudentsController() 
+        public StudentsController(iStudentsInMemory r) 
         {
-            repository = new StudentsInMemory();
+            this.repository = r;
         }
 
         [HttpGet]

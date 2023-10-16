@@ -2,7 +2,7 @@
 
 namespace WEBAPI_Diego_Rocha.Repository
 {
-    public class StudentsInMemory
+    public class StudentsInMemory : iStudentsInMemory
     {
         private readonly List<Student> students = new()
         {
@@ -18,5 +18,10 @@ namespace WEBAPI_Diego_Rocha.Repository
 
         public Student GetStudent(int id)
         { return students.Where(p => p.Id == id).SingleOrDefault(); }
+
+        public Student getStudent(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
