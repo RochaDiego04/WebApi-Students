@@ -1,12 +1,11 @@
-﻿namespace WEBAPI_Diego_Rocha.Models
+﻿namespace WEBAPI_Diego_Rocha.DTO
 {
-    public class Student
+    public class StudentDTO
     {
-        public int Id { get; init; }
+        // Don't return the id to the client
         public string Name { get; set; }
         public int Age { get; set; }
         public DateTime EnrollmentDate { get; init; }
         public string EnrollmentNumber { get; init; }
-
     }
 }

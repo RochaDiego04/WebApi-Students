@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEBAPI_Diego_Rocha.DTO;
 using WEBAPI_Diego_Rocha.Models;
 using WEBAPI_Diego_Rocha.Repository;
 
@@ -16,16 +17,16 @@ namespace WEBAPI_Diego_Rocha.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Student> GetStudents()
+        public IEnumerable<StudentDTO> GetStudents()
         {
-            var StudentsList = repository.getStudents();
+            var StudentsList = repository.GetStudents().Select(s=>s.transformToDTO());
             return StudentsList;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Student> GetStudent(int id)
+        [HttpGet("{enrollmentNumber}")]
+        public ActionResult<StudentDTO> GetStudent(string enrollmentNumber)
         {
-            var item = repository.GetStudent(id);
+            var item = repository.GetStudent(enrollmentNumber).transformToDTO();
             if (item == null)
             {
                 return NotFound();

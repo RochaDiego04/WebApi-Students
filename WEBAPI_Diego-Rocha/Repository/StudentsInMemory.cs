@@ -6,22 +6,18 @@ namespace WEBAPI_Diego_Rocha.Repository
     {
         private readonly List<Student> students = new()
         {
-            new Student { Id = 1, Name = "Diego", Age = 20, EnrollmentNumber = "21310423", EnrollmentDate = DateTime.Now},
-            new Student { Id = 2, Name = "Juan", Age = 22, EnrollmentNumber = "21310429", EnrollmentDate = DateTime.Now},
-            new Student { Id = 3, Name = "Alan", Age = 18, EnrollmentNumber = "21310439", EnrollmentDate = DateTime.Now}
+            new Student { Id = 1, Name = "Diego", Age = 20, EnrollmentDate = DateTime.Now, EnrollmentNumber = "21310423"},
+            new Student { Id = 2, Name = "Juan", Age = 22, EnrollmentDate = DateTime.Now, EnrollmentNumber = "21310429"},
+            new Student { Id = 3, Name = "Alan", Age = 18, EnrollmentDate = DateTime.Now, EnrollmentNumber = "21310439"}
         };
 
-        public IEnumerable<Student> getStudents()
+        public IEnumerable<Student> GetStudents()
         {  
            return students; 
         } 
 
-        public Student GetStudent(int id)
-        { return students.Where(p => p.Id == id).SingleOrDefault(); }
+        public Student GetStudent(string enrollmentNumber)
+        { return students.Where(p => p.EnrollmentNumber == enrollmentNumber).SingleOrDefault(); }
 
-        public Student getStudent(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
