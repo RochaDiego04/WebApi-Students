@@ -39,7 +39,6 @@ namespace WEBAPI_Diego_Rocha.Controllers
         {
             Student student = new Student
             {
-                Id = repository.GetStudents().Max(x => x.Id) + 1, //Get the last id
                 Name = s.Name,
                 Age = s.Age,
                 EnrollmentDate = DateTime.Now,

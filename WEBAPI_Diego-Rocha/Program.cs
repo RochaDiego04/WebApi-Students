@@ -1,3 +1,4 @@
+using System.Configuration;
 using WEBAPI_Diego_Rocha.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<iStudentsInMemory, StudentsInMemory>(); // Dependency Injection
+// Connection to string SQL connection
+var configuration = builder.Configuration;
+var connectionString = configuration.GetConnectionString("SQL");
+builder.Services.AddSingleton(connectionString);
+
+builder.Services.AddSingleton<DataAccess>(new DataAccess(connectionString));
+builder.Services.AddSingleton<iStudentsInMemory, StudentsSQLServer>(); // Dependency Injection
 
 var app = builder.Build();
 
