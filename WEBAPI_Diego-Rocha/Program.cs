@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<iStudentsInMemory, StudentsInMemory>(); // Dependency Injection
+builder.Services.AddSingleton<iStudentsInMemory, StudentsInMemory>(); // Dependency Injection
 
 var app = builder.Build();
 

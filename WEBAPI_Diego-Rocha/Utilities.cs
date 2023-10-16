@@ -7,13 +7,16 @@ namespace WEBAPI_Diego_Rocha
     {
         public static StudentDTO transformToDTO(this Student student)
         {
-            return new StudentDTO
+            if(student != null)
             {
-                Name = student.Name,
-                Age = student.Age,
-                EnrollmentDate = student.EnrollmentDate,
-                EnrollmentNumber = student.EnrollmentNumber
-            };
+                return new StudentDTO
+                {
+                    Name = student.Name,
+                    Age = student.Age,
+                    EnrollmentNumber = student.EnrollmentNumber
+                };
+            }
+            return null;
         }
     }
 }

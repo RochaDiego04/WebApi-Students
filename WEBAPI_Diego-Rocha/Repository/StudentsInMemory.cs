@@ -19,5 +19,9 @@ namespace WEBAPI_Diego_Rocha.Repository
         public Student GetStudent(string enrollmentNumber)
         { return students.Where(p => p.EnrollmentNumber == enrollmentNumber).SingleOrDefault(); }
 
+        public void CreateStudent(Student student)
+        {
+            students.Add(student);
+        }
     }
 }
