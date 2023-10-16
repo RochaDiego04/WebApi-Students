@@ -29,5 +29,11 @@ namespace WEBAPI_Diego_Rocha.Repository
             int index = students.FindIndex(studentExists => studentExists.Id == student.Id);
             students[index] = student;
         }
+
+        public void DeleteStudent(string enrollmentNumber)
+        {
+            int index = students.FindIndex(studentExists => studentExists.EnrollmentNumber == enrollmentNumber);
+            students.RemoveAt(index);
+        }
     }
 }

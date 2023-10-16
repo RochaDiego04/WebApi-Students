@@ -11,5 +11,7 @@ namespace WEBAPI_Diego_Rocha.Repository
         void CreateStudent(Student student);
 
         void UpdateStudent(Student student);
+
+        void DeleteStudent(string enrollmentNumber);
     }
 }

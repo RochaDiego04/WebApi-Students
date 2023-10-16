@@ -61,7 +61,21 @@ namespace WEBAPI_Diego_Rocha.Controllers
             studentExists.Name = s.Name;
             studentExists.Age = s.Age;
 
+            repository.UpdateStudent(studentExists);
+
             return studentExists.transformToDTO();
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteStudent(string studentEnrollmentNumber)
+        {
+            Student studentExists = repository.GetStudent(studentEnrollmentNumber);
+            if (studentExists is null)
+            {
+                return NotFound();
+            }
+            repository.DeleteStudent(studentEnrollmentNumber);
+            return NoContent();
         }
     }
 }
