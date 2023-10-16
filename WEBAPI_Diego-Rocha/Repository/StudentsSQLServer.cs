@@ -46,7 +46,28 @@ namespace WEBAPI_Diego_Rocha.Repository
 
         public void DeleteStudent(string enrollmentNumber)
         {
-            throw new NotImplementedException();
+            SqlConnection sqlConnection = connection();
+            SqlCommand cmd = null;
+            try
+            {
+                sqlConnection.Open();
+                cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = "dbo.DeleteStudents";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@EnrollmentNumber", SqlDbType.NVarChar, 20).Value = enrollmentNumber;
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error deleting the student occurred" + ex.ToString());
+            }
+            finally
+            {
+                cmd.Dispose();
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
         }
 
         public Student GetStudent(string enrollmentNumber)
