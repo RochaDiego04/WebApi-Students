@@ -11,29 +11,34 @@ namespace WEBAPI_Diego_Rocha.Repository
             new Student { Id = 3, Name = "Alan", Age = 18, EnrollmentDate = DateTime.Now, EnrollmentNumber = "21310439"}
         };
 
-        public IEnumerable<Student> GetStudents()
+        public async Task<IEnumerable<Student>> AsyncGetStudents()
         {  
-           return students; 
+           return await Task.FromResult(students); 
         } 
 
-        public Student GetStudent(string enrollmentNumber)
-        { return students.Where(p => p.EnrollmentNumber == enrollmentNumber).SingleOrDefault(); }
-
-        public void CreateStudent(Student student)
-        {
-            students.Add(student);
+        public async Task<Student> AsyncGetStudent(string enrollmentNumber)
+        { 
+            return await Task.FromResult(students.Where(p => p.EnrollmentNumber == enrollmentNumber).SingleOrDefault()); 
         }
 
-        public void UpdateStudent(Student student)
+        public async Task AsyncCreateStudent(Student student)
+        {
+            students.Add(student);
+            await Task.CompletedTask;
+        }
+
+        public async Task AsyncUpdateStudent(Student student)
         {
             int index = students.FindIndex(studentExists => studentExists.Id == student.Id);
             students[index] = student;
+            await Task.CompletedTask;
         }
 
-        public void DeleteStudent(string enrollmentNumber)
+        public async Task AsyncDeleteStudent(string enrollmentNumber)
         {
             int index = students.FindIndex(studentExists => studentExists.EnrollmentNumber == enrollmentNumber);
             students.RemoveAt(index);
+            await Task.CompletedTask;
         }
     }
 }

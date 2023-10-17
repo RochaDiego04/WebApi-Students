@@ -4,14 +4,14 @@ namespace WEBAPI_Diego_Rocha.Repository
 {
     public interface iStudentsInMemory
     {
-        public IEnumerable<Student> GetStudents();
+        Task<IEnumerable<Student>> AsyncGetStudents();
 
-        Student GetStudent(string enrollmentNumber);
+        Task<Student> AsyncGetStudent(string enrollmentNumber);
 
-        void CreateStudent(Student student);
+        Task AsyncCreateStudent(Student student);
 
-        void UpdateStudent(Student student);
+        Task AsyncUpdateStudent(Student student);
 
-        void DeleteStudent(string enrollmentNumber);
+        Task AsyncDeleteStudent(string enrollmentNumber);
     }
 }

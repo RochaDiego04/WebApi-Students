@@ -17,16 +17,16 @@ namespace WEBAPI_Diego_Rocha.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<StudentDTO> GetStudents()
+        public async Task<IEnumerable<StudentDTO>> GetStudents()
         {
-            var StudentsList = repository.GetStudents().Select(s=>s.transformToDTO());
+            var StudentsList = (await repository.AsyncGetStudents()).Select(s=>s.transformToDTO());
             return StudentsList;
         }
 
         [HttpGet("{enrollmentNumber}")]
-        public ActionResult<StudentDTO> GetStudent(string enrollmentNumber)
+        public async Task<ActionResult<StudentDTO>> GetStudent(string enrollmentNumber)
         {
-            var item = repository.GetStudent(enrollmentNumber).transformToDTO();
+            var item = (await repository.AsyncGetStudent(enrollmentNumber)).transformToDTO();
             if (item == null)
             {
                 return NotFound();
@@ -35,7 +35,7 @@ namespace WEBAPI_Diego_Rocha.Controllers
         }
 
         [HttpPost]
-        public ActionResult<StudentDTO> CreateStudent(StudentDTO s)
+        public async Task<ActionResult<StudentDTO>> CreateStudent(StudentDTO s)
         {
             Student student = new Student
             {
@@ -44,14 +44,14 @@ namespace WEBAPI_Diego_Rocha.Controllers
                 EnrollmentDate = DateTime.Now,
                 EnrollmentNumber = s.EnrollmentNumber,
             };
-            repository.CreateStudent(student);
+            await repository.AsyncCreateStudent(student);
             return student.transformToDTO();
         }
 
         [HttpPut]
-        public ActionResult<StudentDTO> UpdateStudent(string studentEnrollmentNumber, UpdateStudentDTO s)
+        public async Task<ActionResult<StudentDTO>> UpdateStudent(string studentEnrollmentNumber, UpdateStudentDTO s)
         {
-            Student studentExists = repository.GetStudent(studentEnrollmentNumber);
+            Student studentExists = await repository.AsyncGetStudent(studentEnrollmentNumber);
             if (studentExists is null)
             {
                 return NotFound();
@@ -60,20 +60,20 @@ namespace WEBAPI_Diego_Rocha.Controllers
             studentExists.Name = s.Name;
             studentExists.Age = s.Age;
 
-            repository.UpdateStudent(studentExists);
+            await repository.AsyncUpdateStudent(studentExists);
 
             return studentExists.transformToDTO();
         }
 
         [HttpDelete]
-        public ActionResult DeleteStudent(string studentEnrollmentNumber)
+        public async Task<ActionResult> DeleteStudent(string studentEnrollmentNumber)
         {
-            Student studentExists = repository.GetStudent(studentEnrollmentNumber);
+            Student studentExists = await repository.AsyncGetStudent(studentEnrollmentNumber);
             if (studentExists is null)
             {
                 return NotFound();
             }
-            repository.DeleteStudent(studentEnrollmentNumber);
+            await repository.AsyncDeleteStudent(studentEnrollmentNumber);
             return NoContent();
         }
     }
